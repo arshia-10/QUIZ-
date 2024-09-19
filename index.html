@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+    <body> 
+                                                                                       
+        <div class="welcome-container">
+            <h1 class="welcome">WELCOME</h1>
+        </div>
+
+        <div class="container">
+            <h1> Quizzes</h1>
+            <button id="create-quiz-btn">Create Your Quiz here</button>
+            
+            <div id="quiz-form" class="hidden">
+                <h2 >Create Your Quiz</h2>
+                <label for="quiz-title"> Title:</label>
+                <input type="text" id="quiz-title" placeholder="Enter title">
+    
+                <div id="questions-container">
+                    <div class="question"></div>
+                        <label>Question 1:</label>
+                        <input type="text" class="question-text" placeholder="Enter your question">
+    
+                        <div class="options">
+                            <label>Options:</label>
+                            <input type="text" class="option" placeholder="Option 1">
+                            <input type="text" class="option" placeholder="Option 2">
+                            <input type="text" class="option" placeholder="Option 3">
+                            <input type="text" class="option" placeholder="Option 4">
+                        </div>
+                    </div>
+                </div>
+                <div id="form-buttons" class="hidden">
+                <button id="add-question-btn">Add Another Question</button>
+                <button id="submit-quiz-btn">Submit Quiz</button>
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+    </html>
+    
