@@ -28,7 +28,7 @@ function showQuestion(index) {
 		prevButton.style.display = 'inline';
 	}
 
-	// Show "Submit" button on the last question and hide the "Next" button
+	// Show "Submit" button on the last question 
 	if (index == questionCount - 1) {
 		nextButton.style.display = 'inline';
 		submitButton.style.display = 'inline';
