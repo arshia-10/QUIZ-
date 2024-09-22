@@ -7,41 +7,46 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-    <body> 
-                                                                                       
-        <div class="welcome-container">
-            <h1 class="welcome">WELCOME</h1>
-        </div>
+    <body>                                                                                     
 
         <div class="container">
             <h1> Quizzes</h1>
-            <button id="create-quiz-btn">Create Your Quiz here</button>
+            <button id="create-quiz-btn" onclick="createQuiz()">Create Your Quiz here</button>
             
-            <div id="quiz-form" class="hidden">
-                <h2 >Create Your Quiz</h2>
-                <label for="quiz-title"> Title:</label>
-                <input type="text" id="quiz-title" placeholder="Enter title">
-    
-                <div id="questions-container">
-                    <div class="question"></div>
-                        <label>Question 1:</label>
-                        <input type="text" class="question-text" placeholder="Enter your question">
-    
-                        <div class="options">
-                            <label>Options:</label>
-                            <input type="text" class="option" placeholder="Option 1">
-                            <input type="text" class="option" placeholder="Option 2">
-                            <input type="text" class="option" placeholder="Option 3">
-                            <input type="text" class="option" placeholder="Option 4">
-                        </div>
-                    </div>
-                </div>
-                <div id="form-buttons" class="hidden">
-                <button id="add-question-btn">Add Another Question</button>
-                <button id="submit-quiz-btn">Submit Quiz</button>
-            </div>
+            <div id="quiz-form" style="display:none;">
+                <h2>Create Your Quiz</h2>
+				<label for="quiz-
+				
+				title">Title:</label>
+				<input type="text" id="quiz-title-input" placeholder="Enter title">
+
+				<div id="questions-container">
+					<div class="question" data-question-index="0">
+						<label>Question 1:</label>
+						<input type="text" class="question-text" placeholder="Enter your question">
+
+						<div class="options">
+							<label>Options:</label>
+							<input type="text" class="option" placeholder="Option 1">
+							<input type="text" class="option" placeholder="Option 2">
+							<input type="text" class="option" placeholder="Option 3">
+							<input type="text" class="option" placeholder="Option 4">
+						</div>
+					</div>
+				</div>
+
+				<div id="form-buttons">
+					<button id="prev-question-btn" style="display:none;">Previous</button>
+					<button id="next-question-btn">Next</button>
+					<button id="submit-quiz-btn" style="display:none;">Submit Quiz</button>
+				</div>
+			</div>
+			<div id="quiz-summary" style="display:none;">
+				<h2>Quiz : <span id="quiz-title"></span></h2>
+				<div id="summary-content"></div>
+			</div>
+			<div id="validation-error" style="margin-top:10px;color: red; display: none;">Please fill out all fields before submitting.</div>
         </div>
         <script src="script.js"></script>
     </body>
     </html>
-    
