@@ -1,66 +1,221 @@
+var currentQuestionIndex = 0;
+var questionCount = 1;
 
-document.getElementById('create-quiz-btn').addEventListener('click', function() {
-    document.querySelector('.container h1').style.display = 'none'; 
-    document.getElementById('create-quiz-btn').style.display = 'none'; 
-    document.querySelector('.welcome-container h1' ).style.display = 'none'; 
-    document.getElementById('quiz-form').classList.remove('hidden');
-    document.getElementById('form-buttons').classList.remove('hidden');
+var quizBtn = document.getElementById('create-quiz-btn');
+var questionsContainer = document.getElementById('questions-container');
+var nextButton = document.getElementById('next-question-btn');
+var prevButton = document.getElementById('prev-question-btn');
+var submitButton = document.getElementById('submit-quiz-btn');
+var quizSummary = document.getElementById('quiz-summary');
+var summaryContent = document.getElementById('summary-content');
+var validationError = document.getElementById('validation-error');
 
-    
-});
+function showQuestion(index) {
+	var questions = document.getElementsByClassName('question');
 
+	for (var i = 0; i < questions.length; i++) {
+		if (i == index) {
+			questions[i].style.display = 'block';
+		} else {
+			questions[i].style.display = 'none';
+		}
+	}
 
-const addQuestionButton = document.getElementById('add-question-btn');
-let questionCount = 1;
+	// Hide "Previous" button on the first question
+	if (index == 0) {
+		prevButton.style.display = 'none';
+	} else {
+		prevButton.style.display = 'inline';
+	}
 
-addQuestionButton.addEventListener('click', function() {
-    questionCount++;
+	// Show "Submit" button on the last question and hide the "Next" button
+	if (index == questionCount - 1) {
+		nextButton.style.display = 'inline';
+		submitButton.style.display = 'inline';
+	} else {
+		nextButton.style.display = 'inline';
+		submitButton.style.display = 'inline';
+	}
+}
 
-    const questionContainer = document.createElement('div');
-    questionContainer.classList.add('question');
+function createNewQuestion() {
+	questionCount++;
 
-    questionContainer.innerHTML = `
-        <label>Question ${questionCount}:</label>
-        <input type="text" class="question-text" placeholder="Enter your question">
-        <div class="options">
-            <label>Options:</label>
-            <input type="text" class="option" placeholder="Option 1">
-            <input type="text" class="option" placeholder="Option 2">
-            <input type="text" class="option" placeholder="Option 3">
-            <input type="text" class="option" placeholder="Option 4">
-        </div>
-    `;
+	var newQuestionDiv = document.createElement('div');
+	newQuestionDiv.className = 'question';
+	newQuestionDiv.style.display = 'none';
+	newQuestionDiv.setAttribute('data-question-index', questionCount - 1);
 
-    document.getElementById('questions-container').appendChild(questionContainer);
-});
+	var questionLabel = document.createElement('label');
+	questionLabel.textContent = 'Question ' + questionCount + ':';
 
+	var questionInput = document.createElement('input');
+	questionInput.type = 'text';
+	questionInput.className = 'question-text';
+	questionInput.placeholder = 'Enter your question';
 
-document.getElementById('submit-quiz-btn').addEventListener('click', function() {
-    const quizTitle = document.getElementById('quiz-title').value;
-    const questions = document.querySelectorAll('.question');
-    let quizData = {
-        title: quizTitle,
-        questions: []
-    };
+	var optionsDiv = document.createElement('div');
+	optionsDiv.className = 'options';
 
-    
-    questions.forEach((questionElement, index) => {
-        const questionText = questionElement.querySelector('.question-text').value;
-        const options = questionElement.querySelectorAll('.option');
-        let optionsArray = [];
+	var optionsLabel = document.createElement('label');
+	optionsLabel.textContent = 'Options:';
+	optionsDiv.appendChild(optionsLabel);
 
-        options.forEach(option => {
-            optionsArray.push(option.value);
-        });
+	for (var i = 1; i <= 4; i++) {
+		var optionInput = document.createElement('input');
+		optionInput.type = 'text';
+		optionInput.className = 'option';
+		optionInput.placeholder = 'Option ' + i;
+		optionsDiv.appendChild(optionInput);
+	}
 
-        quizData.questions.push({
-            question: questionText,
-            options: optionsArray
-        });
-    });
+	newQuestionDiv.appendChild(questionLabel);
+	newQuestionDiv.appendChild(questionInput);
+	newQuestionDiv.appendChild(optionsDiv);
 
-    
-    console.log(quizData);
-    alert('Quiz created successfully! Check the console for data.');
-});
+	questionsContainer.appendChild(newQuestionDiv);
+}
 
+function validateForm(clkbtn) {
+	var isValid = true;
+	validationError.style.display = 'none'; // Hide error initially
+
+	// Check each question
+	var questions = document.getElementsByClassName('question');
+	for (var i = 0; i < questions.length; i++) {
+		var questionText = questions[i].querySelector('.question-text').value;
+		var options = questions[i].getElementsByClassName('option');
+
+		if (!questionText.trim()) {
+			isValid = false;
+			break;
+		}
+
+		// Check if all options are filled
+		for (var j = 0; j < options.length; j++) {
+			if (!options[j].value.trim()) {
+				isValid = false;
+				break;
+			}
+		}
+
+		if (!isValid) break;
+	}
+
+	if (!isValid) { 
+		if(clkbtn == 'nextstep') {
+			validationError.innerHTML  = 'Please fill out all the fields before go to next question.';
+		}
+		validationError.style.display = 'block'; // Show error message
+	}
+
+	return isValid;
+}
+
+function validateCurrentQuestion() {
+        var isValid = true;
+        validationError.style.display = 'none'; // Hide error initially
+
+        // Get the current question
+        var currentQuestion = document.getElementsByClassName('question')[currentQuestionIndex];
+        var questionText = currentQuestion.querySelector('.question-text').value.trim();
+
+        // Validate question text
+        if (!questionText) {
+            isValid = false;
+            validationError.textContent = 'Please fill out the question before going to the next question.';
+        }
+
+        if (!isValid) {
+            validationError.style.display = 'block'; // Show error message
+        }
+
+        return isValid;
+    }
+
+nextButton.onclick = function() { 
+	if (validateCurrentQuestion()) {
+		if (currentQuestionIndex == questionCount - 1) {
+			createNewQuestion();
+		}
+		currentQuestionIndex++;
+		showQuestion(currentQuestionIndex);
+	}
+};
+
+prevButton.onclick = function() {
+	validationError.style.display = 'none';
+	if (currentQuestionIndex > 0) {
+		currentQuestionIndex--;
+		showQuestion(currentQuestionIndex);
+	}
+};
+
+submitButton.onclick = function() {
+	
+	var allValid = true;
+	validationError.style.display = 'none'; // Hide error initially
+	
+	var quizTitle = document.getElementById('quiz-title-input');
+	if(quizTitle.value == '') {
+		validationError.innerHTML  = 'Please fill out the Quiz Title.';
+		validationError.style.display = 'block';
+		return false;
+	}
+
+	var questions = document.getElementsByClassName('question');
+	for (var i = 0; i < questions.length; i++) {
+		var questionText = questions[i].querySelector('.question-text').value.trim();
+		if (!questionText) {
+			allValid = false;
+			break;
+		}
+	}
+
+	if (!allValid) {
+		validationError.textContent = 'Please fill out all questions before submitting.';
+		validationError.style.display = 'block'; // Show error message
+		return;
+	}
+	
+			
+	quizSummary.style.display = 'block';
+	summaryContent.innerHTML = ''; // Clear previous content
+    document.getElementById('quiz-title').innerHTML =  quizTitle.value;
+	// Gather all questions and options
+	var questions = document.getElementsByClassName('question');
+	for (var i = 0; i < questions.length; i++) {
+		var questionText = questions[i].querySelector('.question-text').value;
+
+		var questionSummary = document.createElement('div');
+		questionSummary.className = 'question-summary';
+		var questionLabel = document.createElement('h3');
+		questionLabel.textContent = 'Question ' + (i + 1) + ': ' + questionText;
+
+		questionSummary.appendChild(questionLabel);
+
+		var options = questions[i].getElementsByClassName('option');
+		var optionList = document.createElement('ul');
+		optionList.className = 'summary-ul';
+		for (var j = 0; j < options.length; j++) {
+			if(options[j].value != '') {
+				var optionItem = document.createElement('li');
+				optionItem.textContent = 'Option ' + (j + 1) + ': ' + options[j].value;
+				optionList.appendChild(optionItem);
+			}	
+		}
+
+		questionSummary.appendChild(optionList);
+		summaryContent.appendChild(questionSummary);
+	}
+
+	// Hide the quiz form after submission
+	document.getElementById('quiz-form').style.display = 'none';
+		
+};
+
+function createQuiz() {
+	document.getElementById('quiz-form').style.display = 'block';
+	quizBtn.style.display = 'none';
+	showQuestion(currentQuestionIndex);
+}	
