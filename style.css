@@ -1,84 +1,106 @@
-.welcome-container {
-    text-align: center;
-    margin-bottom: 10px; 
-    
+  body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(243, 237, 208);
+            margin: 0;
+            padding: 0;
+        }
 
-}
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgb(245,242,229);
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
 
-.welcome {
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    font-size: 50px;
-    font-weight: bold;
-    color: #f76c6c;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-}
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
 
-.welcome {
-    animation: bounce 2s infinite;
-}
+        #create-quiz-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: rgb(246, 242, 204);
+            color: rgb(75,70,71);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+        }
 
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-    }
-    40% {
-        transform: translateY(-30px);
-    }
-    60% {
-        transform: translateY(-15px);
-    }
-}
+        #create-quiz-btn:hover {
+            background-color: #b8b85a;
+        }
 
-* {
-    margin: 10px;
-    padding: 10px;
-    box-sizing: border-box;
-}
+        #quiz-form {
+            margin-top: 20px;
+        }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: rgb(243, 237, 208);
-    padding: 20px;
-}
-.container {
-    max-width: 500px;
-    margin: 0 auto;
-    background-color:rgb(245, 242, 229);
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-button {
-    background-color: rgb(246, 242, 204);
-    color: rgb(75, 70, 71);
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-    font-weight: bold;
-}
-button:hover {
-    background-color: #b8b85a;
-}
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
 
-.hidden {
-    display: none;
-}
-#quiz-form {
-    margin-top: 20px;
-    text-align: left;
-}
-label {
-    display: block;
-    margin-top: 10px;
-    font-weight: bold;
-}
-input[type="text"] {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0;
-    border: 1px solid #ddd;
-    border-radius:4px;
-}
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .options input {
+            margin-top: 5px;
+        }
+
+        #form-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        #add-question-btn, #submit-quiz-btn {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 48%;
+        }
+
+        #add-question-btn:hover, #submit-quiz-btn:hover {
+            background-color: #1976d2;
+        }
+
+        .question {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .remove-question-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            display: block;
+            margin-left: auto;
+        }
+
+        .remove-question-btn:hover {
+            background-color: #e53935;
+        }
+
+        .hidden {
+            display: none;
+        }
